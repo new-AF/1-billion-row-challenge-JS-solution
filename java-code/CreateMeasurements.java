@@ -16,7 +16,7 @@
 
 /* changelog:
 
-30-06-2024 Abdullah Fatota: support '_' numeric separator aka '100_000'
+30-06-2024 Abdullah Fatota: support '_' numeric separator aka '100_000' to specify the number of rows to produce, as a command line argument
 
 */
 
@@ -47,7 +47,7 @@ public class CreateMeasurements {
 
         int size = 0;
         try {
-            /* my modification: support number '_' separtor e.g. 100_000*/
+            /* my modification: support number '_' separtor e.g. 100_000 as size argumnet on cli*/
             String str = args[0];
             str = str.replace("_","");
             size = Integer.parseInt(str);

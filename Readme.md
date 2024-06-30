@@ -42,7 +42,7 @@ Navigate back to your copy of this cloned repo:
 
 # Results
 
-This is a straight-forward single-threaded solution which processed 1 billion rows in 22 minutes on my laptop.
+This is a straight-forward single-threaded solution which processed 1 billion rows in 22 minutes on my 11th gen i3 laptop.
 
 ```plaintext
 == Performance of node "my solution.js" ./java-code/measurements.txt
