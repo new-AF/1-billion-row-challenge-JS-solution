@@ -69,9 +69,9 @@ const onClose = (event) => {
 `);
 
     stations.forEach((map, city) => {
-        const average = map.get("sum") / map.get("count");
-        const min = map.get("min");
-        const max = map.get("max");
+        const average = (map.get("sum") / map.get("count")).toFixed(1);
+        const min = map.get("min").toFixed(1);
+        const max = map.get("max").toFixed(1);
         const count = map.get("count");
         // if (count === 1) return;
         console.log(`${city}:${min},${average},${max},${count}`);
