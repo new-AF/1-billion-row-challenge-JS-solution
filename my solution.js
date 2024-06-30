@@ -2,12 +2,12 @@ const fs = require("fs");
 const readline = require("readline");
 
 const constants = {
-    log: false,
+    "do-log": false,
     "max-lines-to-print": Infinity,
 };
 
 const log = (...data) => {
-    if (Do_Log === false) return;
+    if (constants["do-log"] === false) return;
     console.log(...data);
 };
 
@@ -56,6 +56,7 @@ const processLine = (line, stations = stationsMap) => {
 const onLine = (line) => {
     processLine(line);
 };
+
 const onClose = (event) => {
     const stations = stationsMap;
     log(`
