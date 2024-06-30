@@ -1,15 +1,19 @@
 const fs = require("fs");
 const readline = require("readline");
 
-const Do_Log = true;
-const Max_Lines_To_Print = Infinity;
+const constants = {
+    log: false,
+    "max-lines-to-print": Infinity,
+};
 
 const log = (...data) => {
     if (Do_Log === false) return;
-    console.log(data);
+    console.log(...data);
 };
 
-const originalStream = fs.createReadStream("./weather_stations.csv", {
+const filePath = process.argv[2];
+
+const originalStream = fs.createReadStream(filePath, {
     encoding: "utf8",
 });
 const stream = readline.createInterface({
@@ -51,14 +55,9 @@ const processLine = (line, stations = stationsMap) => {
 
 const onLine = (line) => {
     processLine(line);
-
-    if (count >= Max_Lines_To_Print) {
-        stream.close();
-        stream.removeAllListeners();
-    }
 };
 const onClose = (event) => {
-    const stations = stations;
+    const stations = stationsMap;
     log(`
 // results //
 `);
