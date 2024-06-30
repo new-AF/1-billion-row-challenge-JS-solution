@@ -63,6 +63,7 @@ const onLine = (line) => {
 };
 const onClose = (event) => {
     // log(stations);
+    const stations = stations;
     log(`
 // results //
 `);
