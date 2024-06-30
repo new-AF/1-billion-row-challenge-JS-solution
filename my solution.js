@@ -31,7 +31,6 @@ const processLine = (line) => {
         stations.set(
             city,
             new Map([
-                ["name", city],
                 ["min", Infinity],
                 ["max", -Infinity],
                 ["sum", 0],
@@ -68,7 +67,11 @@ const onClose = (event) => {
 // results //
 `);
 
-    const array = Array.from(stations, ([city, map]) => {
+    const keys = Array.from(stations.keys());
+
+    const array = Array.from(keys, (city) => {
+        const map = stations.get(city);
+
         const average = (map.get("sum") / map.get("count")).toFixed(1);
         const min = map.get("min").toFixed(1);
         const max = map.get("max").toFixed(1);
@@ -81,7 +84,7 @@ const onClose = (event) => {
     const originalOutput = array.join(", ");
     const output = `{${originalOutput}}`;
 
-    console.log(output);
+    log(output);
 };
 stream.on("line", onLine);
 stream.on("close", onClose);
