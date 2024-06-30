@@ -1,14 +1,14 @@
-const Do_Log = false;
+const fs = require("fs");
+const readline = require("readline");
+
+const Do_Log = true;
 const Max_Lines_To_Print = Infinity;
 
 const log = (...data) => {
     if (Do_Log === false) return;
     console.log(data);
 };
-const fs = require("fs");
-const readline = require("readline");
 
-// log("hello");
 const originalStream = fs.createReadStream("./weather_stations.csv", {
     encoding: "utf8",
 });
@@ -17,15 +17,13 @@ const stream = readline.createInterface({
     crlfDelay: Infinity,
 });
 
-const stations = new Map();
-let count = 0;
+const stationsMap = new Map();
 
-const processLine = (line) => {
+const processLine = (line, stations = stationsMap) => {
     if (line.startsWith("#")) return;
 
     const [city, temperatureString] = line.split(";");
     const temperature = parseFloat(temperatureString);
-    log("--", city, temperature);
 
     if (stations.has(city) === false)
         stations.set(
@@ -52,8 +50,6 @@ const processLine = (line) => {
 };
 
 const onLine = (line) => {
-    ++count;
-    log(count, line);
     processLine(line);
 
     if (count >= Max_Lines_To_Print) {
@@ -62,7 +58,6 @@ const onLine = (line) => {
     }
 };
 const onClose = (event) => {
-    // log(stations);
     const stations = stations;
     log(`
 // results //
@@ -77,8 +72,6 @@ const onClose = (event) => {
         const min = map.get("min").toFixed(1);
         const max = map.get("max").toFixed(1);
         const count = map.get("count");
-        // if (count === 1) return;
-        // console.log(`${city}=${min}/${average}/${max}`);
         return `${city}=${min}/${average}/${max}`;
     });
 
@@ -87,5 +80,6 @@ const onClose = (event) => {
 
     log(output);
 };
+
 stream.on("line", onLine);
 stream.on("close", onClose);
