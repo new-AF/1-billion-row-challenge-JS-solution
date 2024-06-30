@@ -14,13 +14,22 @@ const stream = readline.createInterface({
 const stations = new Map();
 let count = 0;
 
-const onLine = (chunk) => {
-    log(chunk, count);
+const processLine = (line) => {
+    if (line.startsWith("#")) return;
+
+    const [city, temperatureString] = line.split(";");
+    const temperature = parseFloat(temperatureString);
+    // log("--", city, temperature);
+};
+
+const onLine = (line) => {
     ++count;
-    if (count > 5) {
+    log(line, count);
+    if (count >= 5) {
         stream.close();
         stream.removeAllListeners();
     }
+    processLine(line);
 };
 stream.on("line", onLine);
 // stream.on("close", onLine);
